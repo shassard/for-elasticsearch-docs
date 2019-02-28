@@ -7,18 +7,11 @@ nav_order: 2
 
 # RPM package
 
-Installing and running Open Distro for Elasticsearch from an RPM package is a more manual process than the Docker image. We recommend CentOS 7, but any RPM-based distribution should work. These steps assume you're using CentOS 7.
-
-1. Install two signing keys:
-
-   ```
-   rpm --import https://artifacts.elastic.co/GPG-KEY-elasticsearch
-   rpm --import https://<URL-TBD>/GPG-KEY-opendistroforelasticsearch
-   ```
+Installing and running Open Distro for Elasticsearch from an RPM package is a more manual process than the Docker image. We recommend CentOS 7 and Amazon Linux 2, but any RPM-based distribution that uses systemd should work. These steps assume you're using CentOS 7.
 
 1. `cd /etc/yum.repos.d/`
 
-1. `curl https://d3g5vo6xdbdb9a.cloudfront.net/yum/opendistroforelasticsearch-artifacts.repo -o opendistroforelasticsearch-artifacts.repo`
+1. `sudo curl https://d3g5vo6xdbdb9a.cloudfront.net/yum/opendistroforelasticsearch-artifacts.repo -o opendistroforelasticsearch-artifacts.repo`
 
    You can also create the file manually. It looks like this:
 
@@ -43,7 +36,7 @@ Installing and running Open Distro for Elasticsearch from an RPM package is a mo
    type=rpm-md
    ```
 
-1. If you don't have Java installed, install either Java 8 or Java 11:
+1. Open Distro for Elasticseach requires the full Java JDK, not just the JRE. If you don't have the JDK installed, install either version 8 or version 11:
 
    ```bash
    # Java 11
@@ -70,14 +63,16 @@ Installing and running Open Distro for Elasticsearch from an RPM package is a mo
    curl -XGET https://localhost:9200/_cat/plugins?v -u admin:admin --insecure
    ```
 
+1. For instructions on installing and running Kibana, see [Kibana](../../kibana).
+
 1. To stop Open Distro for Elasticsearch, run `sudo systemctl stop elasticsearch.service`.
 
 
 ## Configuration
 
-To run Open Distro for Elasticsearch when the system starts, run:
+To run Open Distro for Elasticsearch when the system starts:
 
-```
+```bash
 sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable elasticsearch.service
 ```

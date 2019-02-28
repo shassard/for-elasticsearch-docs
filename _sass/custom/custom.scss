@@ -73,23 +73,6 @@ h1, h2, h3, h4, h5, h6 {
   border-left: 5px solid $red-300;
 }
 
-// Gitter chat
-
-.gitter-open-chat-button {
-  display: none;
-  background-color: $blue-200;
-  right: 3rem;
-  padding: 0.5rem 1rem;
-  font-family: 'Open Sans', sans-serif;
-  letter-spacing: normal;
-  &:hover {
-    background-color: $blue-300;
-  }
-  @include mq(md) {
-    display: block;
-  }
-}
-
 // Labels
 
 .label,

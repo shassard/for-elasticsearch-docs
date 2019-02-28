@@ -25,7 +25,7 @@ For a full list of metrics, see [Metrics Reference](../reference). Performance A
 #### Sample request
 
 ```
-GET _performanceanalyzer/metrics?metrics=Latency,CPU_Utilization&agg=avg,max&dim=ShardID&nodes=all
+GET _opendistro/_performanceanalyzer/metrics?metrics=Latency,CPU_Utilization&agg=avg,max&dim=ShardID&nodes=all
 ```
 
 #### Sample response

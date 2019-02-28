@@ -168,6 +168,19 @@ docker exec -it <container-id> /bin/bash
 ```
 
 
+## Key settings
+
+For production workloads, make sure the [Linux setting](https://www.kernel.org/doc/Documentation/sysctl/vm.txt) `vm.max_map_count` is set to at least 262144. On the Open Distro for Elasticsearch Docker image, this setting is the default. To verify, start a Bash session in the container and run:
+
+```bash
+cat /proc/sys/vm/max_map_count
+```
+
+To increase this value, you have to modify the Docker image.
+
+The `docker-compose.yml` file above also contains several key settings: `bootstrap.memory_lock=true`, `ES_JAVA_OPTS=-Xms512m -Xmx512m`, and `9600:9600`. Respectively, these settings disable memory swapping (along with `memlock`), set the size of the Java heap (increase as appropriate for your workload), and allow you to access Performance Analyzer on port 9600.
+
+
 ## Run with custom plugins
 
 To run the image with a custom plugin, first create a [`Dockerfile`](https://docs.docker.com/engine/reference/builder/):

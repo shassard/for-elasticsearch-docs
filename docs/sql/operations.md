@@ -26,8 +26,8 @@ Statement | Example
 Select | `SELECT * FROM my-index`
 Delete | `DELETE FROM my-index WHERE _id=1`
 Where | `SELECT * FROM my-index WHERE ['field']='value'`
-Order By | `SELECT * FROM my-index ORDER BY _id asc`
-Group By | `SELECT * FROM my-index GROUP BY range(age, 20,30,39)`
+Order by | `SELECT * FROM my-index ORDER BY _id asc`
+Group by | `SELECT * FROM my-index GROUP BY range(age, 20,30,39)`
 Limit | `SELECT * FROM my-index LIMIT 50` (default is 200)
 Union | `SELECT * FROM my-index1 UNION SELECT * FROM my-index2`
 Minus | `SELECT * FROM my-index1 MINUS SELECT * FROM my-index2`
@@ -35,17 +35,18 @@ Minus | `SELECT * FROM my-index1 MINUS SELECT * FROM my-index2`
 Like any complex query, large UNION and MINUS statements can strain or even crash your cluster.
 {: .warning }
 
+
 ## Conditions
 
 Condition | Example
 :--- | :---
 Like | `SELECT * FROM my-index WHERE name LIKE 'j%'`
-And | `SELECT * FROM my-index WHERE name LIKE 'j%' and age > 21`
-Or | `SELECT * FROM my-index WHERE name LIKE 'j%' or age > 21`
+And | `SELECT * FROM my-index WHERE name LIKE 'j%' AND age > 21`
+Or | `SELECT * FROM my-index WHERE name LIKE 'j%' OR age > 21`
 Count distinct | `SELECT count(distinct age) FROM my-index`
 In | `SELECT * FROM my-index WHERE name IN ('alejandro', 'carolina')`
 Not | `SELECT * FROM my-index WHERE name NOT IN ('jane')`
-Between | `SELECT * FROM my-index WHERE age BETWEEN 20 and 30`
+Between | `SELECT * FROM my-index WHERE age BETWEEN 20 AND 30`
 Aliases | `SELECT avg(age) AS Average_Age FROM my-index`
 Date | `SELECT * FROM my-index WHERE birthday='1990-11-15'`
 Null | `SELECT * FROM my-index WHERE name IS NULL`
@@ -86,7 +87,7 @@ sqrt | `SELECT sqrt(number) FROM my-index`
 concat_ws | `SELECT concat_ws(' ', age, height) AS combined FROM my-index`
 / | `SELECT number / 100 FROM my-index`
 % | `SELECT number % 100 FROM my-index`
-date\_format | `SELECT date_format(date, 'Y') FROM my-index`
+date_format | `SELECT date_format(date, 'Y') FROM my-index`
 
 
 ## Joins
@@ -95,9 +96,9 @@ See [Joins](../joins) for constraints and limitations.
 
 Join | Example
 :--- | :---
-inner join | `SELECT p.firstname, p.lastname, p.gender, dogs.name FROM people p JOIN dogs d ON d.holdersName = p.firstname WHERE p.age > 12 AND d.age > 1`
-left outer join | `SELECT p.firstname, p.lastname, p.gender, dogs.name FROM people p LEFT JOIN dogs d ON d.holdersName = p.firstname`
-cross join | `SELECT p.firstname, p.lastname, p.gender, dogs.name FROM people p CROSS JOIN dogs d`
+Inner join | `SELECT p.firstname, p.lastname, p.gender, dogs.name FROM people p JOIN dogs d ON d.holdersName = p.firstname WHERE p.age > 12 AND d.age > 1`
+Left outer join | `SELECT p.firstname, p.lastname, p.gender, dogs.name FROM people p LEFT JOIN dogs d ON d.holdersName = p.firstname`
+Cross join | `SELECT p.firstname, p.lastname, p.gender, dogs.name FROM people p CROSS JOIN dogs d`
 
 
 ## Show
@@ -106,4 +107,4 @@ Show commands, well, show you indices and mappings that match an index pattern. 
 
 Show | Example
 :--- | :---
-show tables like | `SHOW TABLES LIKE logs-*`
+Show tables like | `SHOW TABLES LIKE logs-*`
