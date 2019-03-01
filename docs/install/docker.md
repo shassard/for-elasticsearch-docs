@@ -178,7 +178,7 @@ cat /proc/sys/vm/max_map_count
 
 To increase this value, you have to modify the Docker image.
 
-The `docker-compose.yml` file above also contains several key settings: `bootstrap.memory_lock=true`, `ES_JAVA_OPTS=-Xms512m -Xmx512m`, and `9600:9600`. Respectively, these settings disable memory swapping (along with `memlock`), set the size of the Java heap (increase as appropriate for your workload), and allow you to access Performance Analyzer on port 9600.
+The `docker-compose.yml` file above also contains several key settings: `bootstrap.memory_lock=true`, `ES_JAVA_OPTS=-Xms512m -Xmx512m`, and `9600:9600`. Respectively, these settings disable memory swapping (along with `memlock`), set the size of the Java heap (we recommend half of system RAM), and allow you to access Performance Analyzer on port 9600.
 
 
 ## Run with custom plugins

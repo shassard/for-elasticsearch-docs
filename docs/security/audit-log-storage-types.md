@@ -101,8 +101,8 @@ Format | Description
 The `log4j` storage type lets you specify the name of the logger and log level.
 
 ```yml
-opendistro_security.audit.config.log4j.logger_name: sgaudit
+opendistro_security.audit.config.log4j.logger_name: audit
 opendistro_security.audit.config.log4j.level: INFO
 ```
 
-By default, the Security plugin uses the logger name `sgaudit` and logs the events on `INFO` level. Audit events are stored in JSON format.
+By default, the Security plugin uses the logger name `audit` and logs the events on `INFO` level. Audit events are stored in JSON format.

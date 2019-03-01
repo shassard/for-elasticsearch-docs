@@ -65,14 +65,14 @@ You can mark users, role, role mappings, and action groups as read-only in their
 To mark a resource readonly, add the following flag:
 
 ```yaml
-sg_kibana_user:
+kibana_user:
   readonly: true
 ```
 
 Likewise, you can mark users, role, role mappings, and action groups as hidden. Resources that have this flag set to true are not returned by the REST API and cannot be changed nor deleted:
 
 ```yaml
-sg_kibana_user:
+kibana_user:
   hidden: true
 ```
 
@@ -396,7 +396,7 @@ GET _opendistro/_security/api/roles/<role>
 
 ```json
 {
-  "sg_role_starfleet" : {
+  "role_starfleet" : {
     "indices" : {
       "pub*" : {
         "*" : [ "READ" ],
@@ -428,7 +428,7 @@ GET _opendistro/_security/api/roles/
 
 ```json
 {
-  "sg_role_starfleet" : {
+  "role_starfleet" : {
     "indices" : {
       "pub*" : {
         "*" : [ "READ" ],
@@ -459,7 +459,7 @@ DELETE _opendistro/_security/api/roles/<role>
 ```json
 {
   "status":"OK",
-  "message":"role sg_role_starfleet deleted."
+  "message":"role role_starfleet deleted."
 }
 ```
 
@@ -493,7 +493,7 @@ PUT _opendistro/_security/api/roles/<role>
 ```json
 {
   "status":"OK",
-  "message":"role sg_role_starfleet created."
+  "message":"role role_starfleet created."
 }
 ```
 
@@ -521,7 +521,7 @@ PATCH _opendistro/_security/api/roles/<role>
 ```json
 {
   "status":"OK",
-  "message":"role sg_role_starfleet created."
+  "message":"role role_starfleet created."
 }
 ```
 
@@ -549,7 +549,7 @@ PATCH _opendistro/_security/api/roles
 ```json
 {
   "status":"OK",
-  "message":"role sg_role_starfleet created."
+  "message":"role role_starfleet created."
 }
 ```
 
@@ -572,7 +572,7 @@ GET _opendistro/_security/api/rolesmapping/<role>
 
 ```json
 {
-  "sg_role_starfleet" : {
+  "role_starfleet" : {
     "backendroles" : [ "starfleet", "captains", "defectors", "cn=ldaprole,ou=groups,dc=example,dc=com" ],
     "hosts" : [ "*.starfleetintranet.com" ],
     "users" : [ "worf" ]
@@ -595,7 +595,7 @@ GET _opendistro/_security/api/rolesmapping
 
 ```json
 {
-  "sg_role_starfleet" : {
+  "role_starfleet" : {
     "backendroles" : [ "starfleet", "captains", "defectors", "cn=ldaprole,ou=groups,dc=example,dc=com" ],
     "hosts" : [ "*.starfleetintranet.com" ],
     "users" : [ "worf" ]
@@ -685,10 +685,10 @@ Creates or updates multiple role mappings in a single call.
 PATCH _opendistro/_security/api/rolesmapping
 [
   {
-    "op": "add", "path": "/sg_human_resources", "value": { "users": ["user1"], "backendroles": ["backendrole2"] }
+    "op": "add", "path": "/human_resources", "value": { "users": ["user1"], "backendroles": ["backendrole2"] }
   },
   {
-    "op": "add", "path": "/sg_finance", "value": { "users": ["user2"], "backendroles": ["backendrole2"] }
+    "op": "add", "path": "/finance", "value": { "users": ["user2"], "backendroles": ["backendrole2"] }
   }
 ]
 ```

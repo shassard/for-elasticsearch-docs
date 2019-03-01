@@ -10,8 +10,6 @@ This library is licensed under the Apache 2.0 License.
 
 # Build
 
-1. Clone this repository.
-
 1. Navigate to the repository root.
 
 1. Install [Ruby](https://www.ruby-lang.org/en/) if you don't already have it.
@@ -34,9 +32,10 @@ This library is licensed under the Apache 2.0 License.
 # Contribute
 
 1. Fork this repository.
+1. Clone your fork.
 1. Edit the Markdown files in `/docs`.
 1. Use Jekyll to build the content, and make sure your changes render the way you expect.
-1. Submit a pull request.
+1. Push your changes, and submit a pull request.
 
 
 # Content guidelines

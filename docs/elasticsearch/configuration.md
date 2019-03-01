@@ -68,11 +68,15 @@ You can find `elasticsearch.yml` in `/usr/share/elasticsearch/config/elasticsear
 ### Sample configuration file
 
 ```yml
-cluster.name: "odfe-cluster"
+cluster.name: "docker-cluster"
 network.host: 0.0.0.0
+
+# minimum_master_nodes need to be explicitly set when bound on a public IP
+# set to 1 to allow single node clusters
+# Details: https://github.com/elastic/elasticsearch/pull/17288
 discovery.zen.minimum_master_nodes: 1
 
-######## Start Open Distro for Elasticsearch Security Demo Configuration ########
+######## Start OpenDistro for Elasticsearch Security Demo Configuration ########
 # WARNING: revise all the lines below before you go into production
 opendistro_security.ssl.transport.pemcert_filepath: esnode.pem
 opendistro_security.ssl.transport.pemkey_filepath: esnode-key.pem
@@ -90,8 +94,8 @@ opendistro_security.authcz.admin_dn:
 opendistro_security.audit.type: internal_elasticsearch
 opendistro_security.enable_snapshot_restore_privilege: true
 opendistro_security.check_snapshot_restore_write_privileges: true
-opendistro_security.restapi.roles_enabled: ["all_access"]
+opendistro_security.restapi.roles_enabled: ["all_access", "rest_api_access"]
 cluster.routing.allocation.disk.threshold_enabled: false
 node.max_local_storage_nodes: 3
-######## End Open Distro for Elasticsearch Security Demo Configuration ########
+######## End OpenDistro for Elasticsearch Security Demo Configuration ########
 ```

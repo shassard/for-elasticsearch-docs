@@ -5,7 +5,7 @@ nav_order: 1
 permalink: /
 ---
 
-# Open Distro for Elasticsearch
+# Open Distro for Elasticsearch Documentation
 
 This site contains the technical documentation for [Open Distro for Elasticsearch](http://example.com), the community-driven, 100% open source distribution of Elasticsearch with advanced security, alerting, deep performance analysis, and more.
 
@@ -23,7 +23,7 @@ This site contains the technical documentation for [Open Distro for Elasticsearc
 
 ## Why use Open Distro for Elasticsearch?
 
-Open Distro for Elasticsearch is well-suited to several use cases:
+Open Distro for Elasticsearch is well-suited to the following use cases:
 
 * Log analytics
 * Real-time application monitoring
