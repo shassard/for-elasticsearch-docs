@@ -5,7 +5,7 @@ This repository contains the documentation for Open Distro for Elasticsearch, a 
 
 # License
 
-This library is licensed under the Apache 2.0 License.
+This documentation is licensed under the Apache 2.0 License.
 
 
 # Build
