@@ -46,8 +46,8 @@ POST _opendistro/_alerting/monitors
             "filter": {
               "range": {
                 "@timestamp": {
-                  "gte": "{{period_end}}||-1h",
-                  "lte": "{{period_end}}",
+                  "gte": "||-1h",
+                  "lte": "",
                   "format": "epoch_millis"
                 }
               }
@@ -57,42 +57,7 @@ POST _opendistro/_alerting/monitors
       }
     }
   }],
-  "triggers": [],
-  "ui_metadata": {
-    "schedule": {
-      "timezone": null,
-      "frequency": "interval",
-      "period": {
-        "interval": 1,
-        "unit": "MINUTES"
-      },
-      "daily": 0,
-      "weekly": {
-        "mon": false,
-        "tue": false,
-        "wed": false,
-        "thur": false,
-        "fri": false,
-        "sat": false,
-        "sun": false
-      },
-      "monthly": {
-        "type": "day",
-        "day": 1
-      },
-      "cronExpression": "0 */1 * * *"
-    },
-    "search": {
-      "searchType": "graph",
-      "aggregationType": "count",
-      "fieldName": "",
-      "overDocuments": "all documents",
-      "groupedOverTop": 5,
-      "groupedOverFieldName": "bytes",
-      "bucketValue": 1,
-      "bucketUnitOfTime": "h"
-    }
-  }
+  "triggers": []
 }
 ```
 
@@ -100,8 +65,49 @@ POST _opendistro/_alerting/monitors
 
 ```json
 {
-  "_id": "NjDQOWgBPlGCdcEsP4vu",
-  "_version": 1
+  "_id": "ZO5TOmkBi6P41RVAsNwh",
+  "_version": 1,
+  "monitor": {
+    "type": "monitor",
+    "name": "test-monitor",
+    "enabled": true,
+    "enabled_time": 1551461756953,
+    "schedule": {
+      "period": {
+        "interval": 1,
+        "unit": "MINUTES"
+      }
+    },
+    "inputs": [{
+      "search": {
+        "indices": ["movies"],
+        "query": {
+          "size": 0,
+          "query": {
+            "bool": {
+              "filter": [{
+                "range": {
+                  "@timestamp": {
+                    "from": "||-1h",
+                    "to": "",
+                    "include_lower": true,
+                    "include_upper": true,
+                    "format": "epoch_millis",
+                    "boost": 1.0
+                  }
+                }
+              }],
+              "adjust_pure_negative": true,
+              "boost": 1.0
+            }
+          },
+          "aggregations": {}
+        }
+      }
+    }],
+    "triggers": [],
+    "last_update_time": 1551461756953
+  }
 }
 ```
 
@@ -115,102 +121,56 @@ When you update a monitor, include the current version number as a parameter. Op
 #### Request
 
 ```json
-PUT _opendistro/_alerting/monitors/<monitor_id>?version=<number>
+PUT _opendistro/_alerting/monitors/<monitor_id>
 {
   "type": "monitor",
-  "name": "test-test",
+  "name": "test-monitor",
   "enabled": true,
-  "enabled_time": 1547157353943,
+  "enabled_time": 1551466220455,
   "schedule": {
     "period": {
-      "unit": "MINUTES",
-      "interval": 2
+      "interval": 1,
+      "unit": "MINUTES"
     }
   },
   "inputs": [{
     "search": {
-      "indices": ["movies"],
+      "indices": [
+        "*"
+      ],
       "query": {
-        "size": 0,
-        "aggregations": {},
         "query": {
-          "bool": {
-            "filter": {
-              "range": {
-                "@timestamp": {
-                  "gte": "{{period_end}}||-1h",
-                  "lte": "{{period_end}}",
-                  "format": "epoch_millis"
-                }
-              }
-            }
+          "match_all": {
+            "boost": 1
           }
         }
       }
     }
   }],
   "triggers": [{
-    "id": "LTDFOWgBPlGCdcEsdYs5",
+    "id": "StaeOmkBC25HCRGmL_y-",
     "name": "test-trigger",
-    "severity": "4",
+    "severity": "1",
     "condition": {
       "script": {
-        "source": "_ctx.results[0].hits.total > 5000",
+        "source": "return true",
         "lang": "painless"
       }
     },
     "actions": [{
-      "sns": {
-        "name": "test-sns",
-        "topic_arn": "arn:aws:sns:us-west-1:904601396794:Test",
-        "role_arn": "arn:aws:iam::904601396794:role/AndrewLimitedAccess",
-        "subject_template": {
-          "source": "My message subject",
-          "lang": "mustache"
-        },
-        "message_template": {
-          "source": "{{_ctx.monitor.name}} just entered an alert state. Please investigate the issue.\n- Trigger: {{_ctx.trigger.name}}\n- Severity: {{_ctx.trigger.severity}}\n- Period start: {{_ctx.period_start}}\n- Period end: {{_ctx.period_end}}",
-          "lang": "mustache"
-        }
+      "name": "test-action",
+      "destination_id": "RtaaOmkBC25HCRGm0fxi",
+      "subject_template": {
+        "source": "My Message Subject",
+        "lang": "mustache"
+      },
+      "message_template": {
+        "source": "This is my message body.",
+        "lang": "mustache"
       }
     }]
   }],
-  "last_update_time": 1547157468473,
-  "ui_metadata": {
-    "schedule": {
-      "timezone": null,
-      "frequency": "interval",
-      "period": {
-        "unit": "MINUTES",
-        "interval": 2
-      },
-      "daily": 0,
-      "weekly": {
-        "tue": false,
-        "wed": false,
-        "thur": false,
-        "sat": false,
-        "fri": false,
-        "mon": false,
-        "sun": false
-      },
-      "monthly": {
-        "type": "day",
-        "day": 1
-      },
-      "cronExpression": "0 */1 * * *"
-    },
-    "search": {
-      "searchType": "graph",
-      "aggregationType": "count",
-      "fieldName": "",
-      "overDocuments": "all documents",
-      "groupedOverTop": 5,
-      "groupedOverFieldName": "bytes",
-      "bucketValue": 1,
-      "bucketUnitOfTime": "h"
-    }
-  }
+  "last_update_time": 1551466639295
 }
 ```
 
@@ -218,8 +178,58 @@ PUT _opendistro/_alerting/monitors/<monitor_id>?version=<number>
 
 ```json
 {
-  "_id": "NjDQOWgBPlGCdcEsP4vu",
-  "_version": 3
+  "_id": "Q9aXOmkBC25HCRGmzfw-",
+  "_version": 4,
+  "monitor": {
+    "type": "monitor",
+    "name": "test-monitor",
+    "enabled": true,
+    "enabled_time": 1551466220455,
+    "schedule": {
+      "period": {
+        "interval": 1,
+        "unit": "MINUTES"
+      }
+    },
+    "inputs": [{
+      "search": {
+        "indices": [
+          "*"
+        ],
+        "query": {
+          "query": {
+            "match_all": {
+              "boost": 1
+            }
+          }
+        }
+      }
+    }],
+    "triggers": [{
+      "id": "StaeOmkBC25HCRGmL_y-",
+      "name": "test-trigger",
+      "severity": "1",
+      "condition": {
+        "script": {
+          "source": "return true",
+          "lang": "painless"
+        }
+      },
+      "actions": [{
+        "name": "test-action",
+        "destination_id": "RtaaOmkBC25HCRGm0fxi",
+        "subject_template": {
+          "source": "My Message Subject",
+          "lang": "mustache"
+        },
+        "message_template": {
+          "source": "This is my message body.",
+          "lang": "mustache"
+        }
+      }]
+    }],
+    "last_update_time": 1551466761596
+  }
 }
 ```
 
@@ -238,13 +248,13 @@ GET _opendistro/_alerting/monitors/<monitor_id>
 
 ```json
 {
-  "_id": "NjDQOWgBPlGCdcEsP4vu",
-  "_version": 1,
+  "_id": "Q9aXOmkBC25HCRGmzfw-",
+  "_version": 3,
   "monitor": {
     "type": "monitor",
     "name": "test-monitor",
     "enabled": true,
-    "enabled_time": 1547158175726,
+    "enabled_time": 1551466220455,
     "schedule": {
       "period": {
         "interval": 1,
@@ -254,34 +264,41 @@ GET _opendistro/_alerting/monitors/<monitor_id>
     "inputs": [{
       "search": {
         "indices": [
-          "movies"
+          "*"
         ],
         "query": {
-          "size": 0,
           "query": {
-            "bool": {
-              "filter": [{
-                "range": {
-                  "@timestamp": {
-                    "from": "{{period_end}}||-1h",
-                    "to": "{{period_end}}",
-                    "include_lower": true,
-                    "include_upper": true,
-                    "format": "epoch_millis",
-                    "boost": 1
-                  }
-                }
-              }],
-              "adjust_pure_negative": true,
+            "match_all": {
               "boost": 1
             }
-          },
-          "aggregations": {}
+          }
         }
       }
     }],
-    "triggers": [],
-    "last_update_time": 1547158175726
+    "triggers": [{
+      "id": "StaeOmkBC25HCRGmL_y-",
+      "name": "test-trigger",
+      "severity": "1",
+      "condition": {
+        "script": {
+          "source": "return true",
+          "lang": "painless"
+        }
+      },
+      "actions": [{
+        "name": "test-action",
+        "destination_id": "RtaaOmkBC25HCRGm0fxi",
+        "subject_template": {
+          "source": "My Message Subject",
+          "lang": "mustache"
+        },
+        "message_template": {
+          "source": "This is my message body.",
+          "lang": "mustache"
+        }
+      }]
+    }],
+    "last_update_time": 1551466639295
   }
 }
 ```
@@ -608,6 +625,9 @@ GET _opendistro/_alerting/monitors/_search
 
 ## Run monitor
 
+You can add the optional `?dryrun=true` parameter to the URL to show the results of a run without actions sending any message.
+
+
 #### Request
 
 ```json
@@ -638,7 +658,8 @@ POST _opendistro/_alerting/monitors/<monitor_id>/_execute
 
 ## Acknowledge alert
 
-To get the alert ID, query the `.opendistro-alerts` index. See [Alerting indices](../settings#alerting-indices).
+To get the alert ID, query the `.opendistro-alerts` index. See [Alerting indices](../settings#alerting-indices). You can acknowledge any number of alerts in one call. If the alert is already in an ERROR, COMPLETED, or ACKNOWLEDGED state, it will appear in the `failed` array.
+
 
 #### Request
 

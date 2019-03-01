@@ -19,11 +19,11 @@ has_children: false
 
 Term | Definition
 :--- | :---
-Monitor | A job that runs on a defined schedule and checks data from one or more Elasticsearch indices against one or more *triggers*.
-Trigger | Conditions that, if met, generate *alerts* in Kibana and perform some *action*.
-Alert | A notification that a monitor has been triggered. Alerts persist until you acknowledge them.
-Action | The steps that you want the monitor to take after being triggered, such as sending an email, SMS, or HTTP request (webhook).
-Destination | A reusable location for an action, such as an email server or URL.
+Monitor | A job that runs on a defined schedule and queries Elasticsearch. The results of these queries are then used as input for one or more *triggers*.
+Trigger | Conditions that, if met, generate *alerts* and can perform some *action*.
+Alert | A notification that a monitor's trigger condition has been met.
+Action | The information that you want the monitor to send out after being triggered. Actions have a *destination*, a message subject, and a message body.
+Destination | A reusable location for an action, such as Amazon Chime, Slack, or a webhook URL.
 
 
 ---
@@ -34,7 +34,8 @@ Destination | A reusable location for an action, such as an email server or URL.
 1. Specify a name for the destination so that you can identify it later.
 1. For **Type**, choose [Amazon Chime](https://aws.amazon.com/chime/), [Slack](https://slack.com/), or custom webhook.
 1. Specify the webhook URL. For more information about webhooks, see the documentation for [Chime](https://docs.aws.amazon.com/chime/latest/ug/webhooks.html) and [Slack](https://api.slack.com/incoming-webhooks).
-   For custom webhooks, you must specify more information: parameters, authentication, and headers.
+
+   For custom webhooks, you must specify more information: parameters, authentication, and headers. This information is stored in plain text in the Elasticsearch cluster. We will improve this design in the future, but for now, credentials might be visible to other Elasticsearch users.
 
 
 ---
@@ -43,7 +44,7 @@ Destination | A reusable location for an action, such as an email server or URL.
 
 1. Choose **Alerting**, **Monitors**, **Create monitor**.
 1. Specify a name and schedule for the monitor.
-1. Choose one or more indices, or specify `*` for all indices in your cluster.
+1. Choose one or more indices. You can also use `*` as a wildcard to specify an index pattern.
 1. You can define monitors in two ways: visually or using a query.
 
    - Visual definition works well for monitors that you can define as "some value is above or below some threshold for some amount of time."
@@ -72,12 +73,14 @@ Either way, you begin by specifying a name and severity level for the trigger. S
 
 For **Trigger condition**, specify a threshold for the aggregation and timeframe you chose earlier, such as "is below 1,000" or "is exactly 10."
 
+The threshold line moves up and down as you increase and decrease the threshold. Once this line is breached, the trigger evaluates to true.
+
 
 ### Extraction query
 
 For **Trigger condition**, specify a Painless script that returns true or false. Painless is the default Elasticsearch scripting language and has a syntax similar to Groovy.
 
-Trigger condition scripts revolve around the `_ctx.results[0]` variable, which corresponds to the extraction query response. For example, your script might reference `_ctx.results[0].hits.total` or `_ctx.results[0].hits.hits[i]._source.error_code`.
+Trigger condition scripts revolve around the `ctx.results[0]` variable, which corresponds to the extraction query response. For example, your script might reference `ctx.results[0].hits.total` or `ctx.results[0].hits.hits[i]._source.error_code`.
 
 A return value of true means the trigger condition has been met, and the trigger should execute its actions. Test your script using the **Run** button.
 
@@ -119,13 +122,13 @@ if (score > 99) {
 
 Variable | Description
 :--- | :---
-`ctx.results` | Contains the query results. This variable is empty if the trigger was unable to retrieve results. See `ctx.error`.
-`ctx.monitor` | Includes `ctx.monitor.name`, `type`, `enabled`, `enabled_time`, `schedule`, `inputs`, `triggers` and `last_update_time`.
-`ctx.trigger` | Includes `ctx.trigger.name`, `severity`, `condition`, and `actions`.
-`ctx.periodStart` | The beginning of the period during which the alert triggered. For example, if a monitor runs every ten minutes, a period might begin at 10:40 and end at 10:50.
+`ctx.results` | An array with one element (i.e. `ctx.results[0]`). Contains the query results. This variable is empty if the trigger was unable to retrieve results. See `ctx.error`.
+`ctx.monitor` | Includes `ctx.monitor.name`, `ctx.monitor.type`, `ctx.monitor.enabled`, `ctx.monitor.enabled_time`, `ctx.monitor.schedule`, `ctx.monitor.inputs`, `triggers` and `ctx.monitor.last_update_time`.
+`ctx.trigger` | Includes `ctx.trigger.name`, `ctx.trigger.severity`, `ctx.trigger.condition`, and `ctx.trigger.actions`.
+`ctx.periodStart` | Unix timestamp for the beginning of the period during which the alert triggered. For example, if a monitor runs every ten minutes, a period might begin at 10:40 and end at 10:50.
 `ctx.periodEnd` | The end of the period during which the alert triggered.
-`ctx.error` | The error message if the trigger was unable to retrieve results. Null otherwise.
-`ctx.alert` | The current, active alert (if it exists). Null if no alert is active.
+`ctx.error` | The error message if the trigger was unable to retrieve results or unable to evaluate the trigger, typically due to a compile error or null pointer exception. Null otherwise.
+`ctx.alert` | The current, active alert (if it exists). Includes `ctx.alert.id`, `ctx.alert.version`, and `ctx.alert.isAcknowledged`. Null if no alert is active.
 
 
 ---
@@ -172,7 +175,7 @@ For the purposes of the alerting feature, the key SNS terms are *topic* and *mes
 1. Specify the ARN for an [AWS Identity and Access Management (IAM) role](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles.html) that has privileges to publish to the SNS topic.
 1. Add a subject and body for the SNS message.
 
-   You can add variables to your messages using [Mustache templates](https://mustache.github.io/mustache.5.html). You have access to `_ctx.action`, the name of the current action, as well as all [trigger variables](#available-variables).
+   You can add variables to your messages using [Mustache templates](https://mustache.github.io/mustache.5.html). You have access to `ctx.action`, the name of the current action, as well as all [trigger variables](#available-variables).
 
 1. (Optional) Set the maximum message frequency. For monitors that run frequently, this setting can reduce the number of repeated messages for the same issue.
 
@@ -190,10 +193,10 @@ Alerts persist until you resolve the root cause. Alerts have the following state
 
 State | Description
 :--- | :---
-Active | The alert is ongoing and unacknowledged.
+Active | The alert is ongoing and unacknowledged. Alerts remain in this state until you acknowledge them, delete the trigger associated with the alert, or delete the monitor entirely.
 Acknowledged | Someone has acknowledged the alert, but not fixed the root cause.
-Completed | The alert is no longer ongoing.
-Error | An error occurred while executing the trigger---usually the result of an improper action configuration.
+Completed | The alert is no longer ongoing. Alerts enter this state after the corresponding trigger evaluates to false.
+Error | An error occurred while executing the trigger---usually the result of a a bad trigger or destination.
 Deleted | Someone deleted the monitor or trigger associated with this alert while the alert was ongoing.
 
 
@@ -202,5 +205,5 @@ Deleted | Someone deleted the monitor or trigger associated with this alert whil
 
 ## Notes
 
-- Monitors run as the `admin` user.
+- Monitors run as the `admin` user, which means that monitors can get all documents in all indices and do not respect roles in the Security plugin. Please keep this fact in mind while working with sensitive data.
 - After an action sends a message, the content of that message has left the purview of the Security plugin. Securing access to that message (e.g. access to the Slack channel) is your responsibility.

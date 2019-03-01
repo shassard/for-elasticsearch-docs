@@ -10,7 +10,7 @@ nav_order: 2
 
 ## Alerting indices
 
-The alerting feature creates several indices and one alias.
+The alerting feature creates several indices and one alias. Don't delete these or modify their contents without using the alerting APIs.
 
 Index | Purpose
 :--- | :---
