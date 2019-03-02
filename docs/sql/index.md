@@ -42,7 +42,7 @@ When you return data in CSV format, each row corresponds to a *document*, and ea
 
 ## About the elasticsearch-sql plugin
 
-SQL uses an improved version of the [elasticsearch-sql](https://github.com/NLPchina/elasticsearch-sql) plugin, which translates SQL to the Elasticsearch query DSL. For supported SQL features, see [Operations](operations).
+SQL uses an enhanced version of the [elasticsearch-sql](https://github.com/NLPchina/elasticsearch-sql) plugin, which translates SQL to the Elasticsearch query DSL. For supported SQL features, see [Operations](operations).
 
 
 ## User interfaces

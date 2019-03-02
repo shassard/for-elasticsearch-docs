@@ -78,7 +78,7 @@ kibana_user:
 
 Hidden resources are read-only by definition.
 
-To add or remove these flags, you need to use the `sgadmin` role.
+To add or remove these flags, you need to use the `admin` role.
 
 ---
 
