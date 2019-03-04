@@ -89,7 +89,7 @@ If your node certificates have an OID identifier in the SAN section, you can omi
 
 ## Configure admin certificates
 
-Admin certificates are regular client certificates that have elevated rights to perform administrative tasks. You need an admin certificate to change the the Security plugin configuration using the REST API. Admin certificates are configured in `elasticsearch.yml` by stating their DN(s):
+Admin certificates are regular client certificates that have elevated rights to perform administrative tasks. You need an admin certificate to change the the Security plugin configuration using `plugins/opendistro_security/tools/securityadmin.sh` or the REST API. Admin certificates are configured in `elasticsearch.yml` by stating their DN(s):
 
 ```yaml
 opendistro_security.authcz.admin_dn:
