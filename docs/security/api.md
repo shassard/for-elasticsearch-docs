@@ -38,7 +38,7 @@ Possible values for `endpoint` are:
 - ROLES
 - ROLESMAPPING
 - INTERNALUSERS
-- SGCONFIG
+- CONFIG
 - CACHE
 - LICENSE
 - SYSTEMINFO

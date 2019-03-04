@@ -41,7 +41,7 @@ authc:
       type: noop
 ```
 
-Once you have configured SAML in `sg_config`, you need to also [activate it in Kibana](#kibana-configuration).
+Once you have configured SAML in `config.yml`, you need to also [activate it in Kibana](#kibana-configuration).
 
 
 ## Running multiple authentication domains

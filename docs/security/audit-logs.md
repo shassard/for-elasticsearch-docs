@@ -42,7 +42,7 @@ Event | Logged on REST | Logged on transport | Description
 `MISSING_PRIVILEGES` | No | Yes | The user does not have the required permissions to execute the request.
 `GRANTED_PRIVILEGES` | No | Yes | A user made a successful request to Elasticsearch.
 `SSL_EXCEPTION` | Yes | Yes | An attempt was made to access Elasticsearch without a valid SSL/TLS certificate.
-`SG_INDEX_ATTEMPT` | No | Yes | An attempt was made to modify the Security plugin internal user and privileges index without the required permissions or TLS admin certificate.
+`OPENDISTRO_SECURITY_INDEX_ATTEMPT` | No | Yes | An attempt was made to modify the Security plugin internal user and privileges index without the required permissions or TLS admin certificate.
 `BAD_HEADERS` | Yes | Yes | An attempt was made to spoof a request to Elasticsearch with the Security plugin internal headers.
 
 These default log settings work well for most use cases, but you can change settings to save storage space or adapt the information to your exact needs.
@@ -60,7 +60,7 @@ opendistro_security.audit.config.disabled_transport_categories: <disabled catego
 For example:
 
 ```yml
-opendistro_security.audit.config.disabled_rest_categories: AUTHENTICATED, SG_INDEX_ATTEMPT
+opendistro_security.audit.config.disabled_rest_categories: AUTHENTICATED, OPENDISTRO_SECURITY_INDEX_ATTEMPT
 opendistro_security.audit.config.disabled_transport_categories: GRANTED_PRIVILEGES
 ```
 
@@ -157,7 +157,7 @@ opendistro_security.audit.ignore_users: NONE
 
 ## Configure the audit log index name
 
-By default, the Security plugin stores audit events in a daily rolling index named `sg6-auditlog-YYYY.MM.dd`. You can configure the name of the index in `elasticsearch.yml`:
+By default, the Security plugin stores audit events in a daily rolling index named `auditlog-YYYY.MM.dd`. You can configure the name of the index in `elasticsearch.yml`:
 
 ```yml
 opendistro_security.audit.config.index: myauditlogindex
@@ -166,7 +166,7 @@ opendistro_security.audit.config.index: myauditlogindex
 Use a date pattern in the index name to configure daily, weekly, or monthly rolling indices:
 
 ```yml
-opendistro_security.audit.config.index: "'sg6-auditlog-'YYYY.MM.dd"
+opendistro_security.audit.config.index: "'auditlog-'YYYY.MM.dd"
 ```
 
 For a reference on the date pattern format, see the [Joda DateTimeFormat documentation](http://www.joda.org/joda-time/apidocs/org/joda/time/format/DateTimeFormat.html).

@@ -18,7 +18,7 @@ Name | Description
 :--- | :---
 `audit_format_version` | The audit log message format version.
 `audit_utc_timestamp` | The UTC timestamp for the event.
-`audit_category` | The audit log category, one of FAILED_LOGIN, MISSING_PRIVILEGES, BAD_HEADERS, SSL_EXCEPTION, SG_INDEX_ATTEMPT, AUTHENTICATED or GRANTED_PRIVILEGES.
+`audit_category` | The audit log category, one of FAILED_LOGIN, MISSING_PRIVILEGES, BAD_HEADERS, SSL_EXCEPTION, OPENDISTRO_SECURITY_INDEX_ATTEMPT, AUTHENTICATED or GRANTED_PRIVILEGES.
 `audit_node_id ` | The ID of the node where the event was generated.
 `audit_node_name` | The name of the node where the event was generated.
 `audit_node_host_address` | The host address of the node where the event was generated.
@@ -156,7 +156,7 @@ Name | Description
 `audit_trace_doc_types` | The document types affected by the request. Only logged if `resolve_indices` is true.
 
 
-## Transport SG_INDEX_ATTEMPT attributes
+## Transport OPENDISTRO_SECURITY_INDEX_ATTEMPT attributes
 
 Name | Description
 :--- | :---

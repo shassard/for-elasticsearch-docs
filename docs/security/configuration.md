@@ -14,7 +14,7 @@ The main configuration file for authentication and authorization modules  is `pl
 `config.yml` has three main parts:
 
 ```yaml
-searchguard:
+opendistro_security:
   dynamic:
     http:
       ...
