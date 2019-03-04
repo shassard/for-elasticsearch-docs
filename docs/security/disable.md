@@ -2,7 +2,7 @@
 layout: default
 title: Disable Security
 parent: Security
-nav_order: 12
+nav_order: 99
 ---
 
 # Disable security

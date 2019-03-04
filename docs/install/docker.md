@@ -16,6 +16,15 @@ docker pull <registry>/<organization>/opendistroforelasticsearch:<image-version>
 Open Distro for Elasticsearch images use `centos:7` as the base image.
 
 
+---
+
+#### Table of contents
+1. TOC
+{:toc}
+
+
+---
+
 ## Run the image
 
 To run the image for local development:
@@ -168,7 +177,7 @@ docker exec -it <container-id> /bin/bash
 ```
 
 
-## Key settings
+## Important settings
 
 For production workloads, make sure the [Linux setting](https://www.kernel.org/doc/Documentation/sysctl/vm.txt) `vm.max_map_count` is set to at least 262144. On the Open Distro for Elasticsearch Docker image, this setting is the default. To verify, start a Bash session in the container and run:
 

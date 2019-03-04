@@ -2,7 +2,7 @@
 layout: default
 title: LDAP
 parent: Security
-nav_order: 3
+nav_order: 4
 ---
 
 # Active Directory and LDAP

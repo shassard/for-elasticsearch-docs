@@ -2,7 +2,7 @@
 layout: default
 title: Audit Logs
 parent: Security
-nav_order: 8
+nav_order: 96
 ---
 
 # Enable audit logs

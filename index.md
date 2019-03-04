@@ -68,4 +68,4 @@ To learn more, see [Install](docs/install).
 
 [Open Distro for Elasticsearch](http://example.com) is supported by Amazon Web Services. All components are available under the [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0.html) on [GitHub](https://github.com/OpenDistro).
 
-The project welcomes GitHub issues, bug fixes, features, plugins, documentation---anything at all. To get involved, see [Contribute](http://example.com/contribute) on the Open Distro for Elasticsearch project website.
+The project welcomes GitHub issues, bug fixes, features, plugins, documentation---anything at all. To get involved, see [Contribute](http://example.com/contribute) on the Open Distro for Elasticsearch website.

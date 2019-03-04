@@ -2,7 +2,7 @@
 layout: default
 title: Default Action Groups
 parent: Security
-nav_order: 5
+nav_order: 6
 ---
 
 # Default action groups

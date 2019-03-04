@@ -2,7 +2,7 @@
 layout: default
 title: Audit Log Storage Types
 parent: Security
-nav_order: 9
+nav_order: 97
 ---
 
 # Audit log storage types

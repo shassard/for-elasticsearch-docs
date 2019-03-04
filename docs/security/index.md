@@ -18,5 +18,6 @@ Open Distro for Elasticsearch includes the Security plugin for authentication an
 - Audit logging of read and write operations
 - Support for Active Directory, LDAP, Kerberos, and SAML
 - Cross-cluster search
+- Kibana multi-tenancy
 
 If you don't want to use the plugin, see [Disable security](disable).

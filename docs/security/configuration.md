@@ -2,7 +2,7 @@
 layout: default
 title: Backend Configuration
 parent: Security
-nav_order: 3
+nav_order: 2
 ---
 
 # Backend configuration

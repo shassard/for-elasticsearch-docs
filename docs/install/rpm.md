@@ -7,7 +7,7 @@ nav_order: 2
 
 # RPM package
 
-Installing and running Open Distro for Elasticsearch from an RPM package is a more manual process than the Docker image. We recommend CentOS 7 and Amazon Linux 2, but any RPM-based distribution that uses systemd should work. These steps assume you're using CentOS 7.
+Installing and running Open Distro for Elasticsearch from an RPM package is a more manual process than the Docker image. We recommend CentOS 7 and Amazon Linux 2, but any RPM-based distribution that uses [systemd](https://en.wikipedia.org/wiki/Systemd) should work. These steps assume you're using CentOS 7.
 
 1. `cd /etc/yum.repos.d/`
 
@@ -77,4 +77,4 @@ sudo /bin/systemctl daemon-reload
 sudo /bin/systemctl enable elasticsearch.service
 ```
 
-You can also modify the values in `/etc/sysconfig/elasticsearch` (`JAVA_HOME`, most notably) and `/etc/elasticsearch/elasticsearch.yml`. To learn more, see [Elasticsearch configuration](../../elasticsearch/configuration/).
+You can also modify the values in `/etc/sysconfig/elasticsearch` (`JAVA_HOME`, most notably) and `/etc/elasticsearch/elasticsearch.yml`. To learn more, see [Elasticsearch configuration](../../elasticsearch/configuration/) and [Important Settings](../docker#important-settings) on the Docker page.
