@@ -148,6 +148,8 @@ If you don't want to receive notifications for alerts, you don't have to add act
 
 1. Choose **Create**.
 
+After an action sends a message, the content of that message has left the purview of the Security plugin. Securing access to the message (e.g. access to the Slack channel) is your responsibility.
+
 
 #### Sample message
 
@@ -198,12 +200,3 @@ Acknowledged | Someone has acknowledged the alert, but not fixed the root cause.
 Completed | The alert is no longer ongoing. Alerts enter this state after the corresponding trigger evaluates to false.
 Error | An error occurred while executing the trigger---usually the result of a a bad trigger or destination.
 Deleted | Someone deleted the monitor or trigger associated with this alert while the alert was ongoing.
-
-
-
----
-
-## Notes
-
-- Monitors run as the `admin` user, which means that monitors can get all documents in all indices and do not respect roles in the Security plugin. Please keep this fact in mind while working with sensitive data.
-- After an action sends a message, the content of that message has left the purview of the Security plugin. Securing access to that message (e.g. access to the Slack channel) is your responsibility.
